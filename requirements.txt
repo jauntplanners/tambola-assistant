@@ -1,0 +1,5 @@
+bcrypt==5.0.0
+fastapi==0.142.2
+itsdangerous==2.2.0
+python-multipart==0.0.32
+uvicorn[standard]==0.54.0

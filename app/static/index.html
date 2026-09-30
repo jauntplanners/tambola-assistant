@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#111418">
+  <title>Tambola Assistant</title>
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+  <!-- SETUP -->
+  <section id="setup" class="screen">
+    <div class="setup-card">
+      <h1>Tambola Assistant</h1>
+      <p class="muted">Photograph your tickets (one straight photo per ticket works best), or type them in. Tickets are numbered T1, T2… in the order you add them. Write the same numbers on your paper tickets.</p>
+      <label class="btn primary big">
+        Scan ticket photos
+        <input id="scanInput" type="file" accept="image/*" multiple hidden>
+      </label>
+      <div class="row">
+        <button class="btn" data-blank="3">Type 3 tickets</button>
+        <button class="btn" data-blank="6">Type 6 tickets</button>
+      </div>
+      <p id="scanStatus" class="status"></p>
+      <form method="post" action="/logout"><button class="btn link">Log out</button></form>
+    </div>
+  </section>
+
+  <!-- REVIEW -->
+  <section id="review" class="screen" hidden>
+    <header class="review-head">
+      <h2>Check your tickets</h2>
+      <p class="muted">Compare with the paper tickets. Cells in red break a ticket rule, so fix them. Tap a cell to edit it.</p>
+    </header>
+    <div id="reviewList" class="review-list"></div>
+    <p id="reviewStatus" class="status"></p>
+    <footer class="review-foot">
+      <label class="btn">
+        + Scan more photos
+        <input id="scanMore" type="file" accept="image/*" multiple hidden>
+      </label>
+      <button id="addBlank" class="btn">+ Blank ticket</button>
+      <button id="startGame" class="btn primary">Start game</button>
+    </footer>
+  </section>
+
+  <!-- PLAY -->
+  <section id="play" class="screen" hidden>
+    <div class="rotate">Turn your phone sideways (landscape)</div>
+    <div class="play-grid">
+      <div class="controls">
+        <div id="alertStrip" class="alert-strip"></div>
+        <div class="entry">
+          <input id="num" class="num" autocomplete="off" inputmode="none" maxlength="2" placeholder="No." aria-label="Called number">
+          <div class="keypad" id="keypad">
+            <button data-k="1">1</button><button data-k="2">2</button><button data-k="3">3</button><button data-k="back" class="k-alt">⌫</button>
+            <button data-k="4">4</button><button data-k="5">5</button><button data-k="6">6</button><button data-k="0">0</button>
+            <button data-k="7">7</button><button data-k="8">8</button><button data-k="9">9</button><button data-k="enter" class="k-enter">↵</button>
+          </div>
+        </div>
+        <div id="where" class="where">Type the called number</div>
+        <div class="recent-row">
+          <span id="calledCount" class="count">0 called</span>
+          <span id="recent" class="recent"></span>
+          <button id="undo" class="btn small">Undo</button>
+          <button id="menuBtn" class="btn small" aria-label="Menu">⚙</button>
+        </div>
+        <div id="prizeChips" class="chips"></div>
+      </div>
+      <div id="tickets" class="tickets"></div>
+    </div>
+  </section>
+
+  <!-- MENU -->
+  <dialog id="menu">
+    <form method="dialog" class="menu-form">
+      <h3>Settings</h3>
+      <label>Early prize count
+        <select id="setEarly"><option value="7">Early 7</option><option value="5">Early 5</option></select>
+      </label>
+      <label>No Early alerts until <input id="setEarlyGate" type="number" min="0" max="90"> numbers called</label>
+      <label>No Full House alerts until <input id="setFhGate" type="number" min="0" max="90"> numbers called</label>
+      <label class="check"><input id="setAuto" type="checkbox"> Enter 2-digit numbers automatically (no ↵)</label>
+      <label class="check"><input id="setKbd" type="checkbox"> Use phone keyboard instead of keypad</label>
+      <div class="row">
+        <button id="editTickets" type="button" class="btn">Edit tickets</button>
+        <button value="close" class="btn primary">Done</button>
+      </div>
+      <hr>
+      <div class="row">
+        <button id="resetBtn" type="button" class="btn danger">Reset game…</button>
+        <button id="logoutBtn" type="button" class="btn link">Log out</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="confirmReset">
+    <form method="dialog" class="menu-form">
+      <h3>Reset game?</h3>
+      <p>All called numbers and tickets will be cleared.</p>
+      <div class="row">
+        <button value="cancel" class="btn primary">Cancel</button>
+        <button value="reset" class="btn danger">Reset</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script src="/static/prizes.js"></script>
+  <script src="/static/ocr.js"></script>
+  <script src="/static/app.js"></script>
+</body>
+</html>

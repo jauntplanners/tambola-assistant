@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tambola Assistant – Log in</title>
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body class="login-body">
+  <form class="login-card" method="post" action="/login">
+    <h1>Tambola Assistant</h1>
+    <p id="err" class="err" hidden></p>
+    <label>User ID <input name="username" autocomplete="username" required autofocus></label>
+    <label>Password <input name="password" type="password" autocomplete="current-password" required></label>
+    <button type="submit" class="btn primary">Log in</button>
+  </form>
+  <script>
+    const e = new URLSearchParams(location.search).get("e");
+    const msg = { bad: "Wrong user ID or password.", locked: "Too many attempts. Wait 10 minutes." }[e];
+    if (msg) { const el = document.getElementById("err"); el.textContent = msg; el.hidden = false; }
+  </script>
+</body>
+</html>
